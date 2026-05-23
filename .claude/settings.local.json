@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(pnpm --version)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm dev *)",
+      "Read(//c/Users/DELL/AppData/Local/Temp/claude/C--Users-DELL-Desktop-portfolio/5262ac79-ab4b-4dfa-b04b-60345d0e32b6/tasks/**)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"projects: %{http_code}\\\\n\" http://localhost:3000/projects)",
+      "Bash(curl -s -o /dev/null -w \"lifelog: %{http_code}\\\\n\" http://localhost:3000/projects/lifelog)",
+      "Bash(curl -s -o /dev/null -w \"writing: %{http_code}\\\\n\" http://localhost:3000/writing)",
+      "Bash(curl -s -o /dev/null -w \"spotify: %{http_code}\\\\n\" http://localhost:3000/api/spotify)",
+      "Bash(curl -s -o /dev/null -w \"writing\\(should 404\\): %{http_code}\\\\n\" http://localhost:3000/writing)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3001/)",
+      "Bash(curl -s -o /dev/null -w \"projects: %{http_code}\\\\n\" http://localhost:3001/projects)",
+      "Bash(curl -s -o /dev/null -w \"lifelog: %{http_code}\\\\n\" http://localhost:3001/projects/lifelog)",
+      "Bash(curl -s -o /dev/null -w \"writing\\(404 expected\\): %{http_code}\\\\n\" http://localhost:3001/writing)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3002/)",
+      "Bash(curl -s -o /dev/null -w \"projects: %{http_code}\\\\n\" http://localhost:3002/projects)",
+      "Bash(curl -s -o /dev/null -w \"lifelog: %{http_code}\\\\n\" http://localhost:3002/projects/lifelog)",
+      "Bash(curl -s -o /dev/null -w \"spotify\\(404 expected\\): %{http_code}\\\\n\" http://localhost:3002/api/spotify)",
+      "Bash(curl -s -o /dev/null -w \"writing\\(404 expected\\): %{http_code}\\\\n\" http://localhost:3002/writing)",
+      "Bash(curl -s -o /dev/null -w \"projects again: %{http_code}\\\\n\" http://localhost:3002/projects)",
+      "Bash(npm run *)",
+      "PowerShell(Get-NetTCPConnection *)",
+      "PowerShell(Remove-Item *)",
+      "Bash(curl -s http://localhost:3000/)",
+      "PowerShell(New-Item *)",
+      "WebFetch(domain:blakinq.framer.website)",
+      "Bash(pnpm build *)",
+      "PowerShell(Stop-Process *)",
+      "Bash(npx tsc *)",
+      "Bash(grep -q \"Ready in\\\\|compiled\\\\|error\" \"C:\\\\\\\\Users\\\\\\\\DELL\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\C--Users-DELL-Desktop-portfolio\\\\\\\\98c5e3df-4878-492a-94ab-9b54d26ddce3\\\\\\\\tasks\\\\\\\\bf39dp95d.output\")",
+      "Bash(tail -20 \"C:\\\\\\\\Users\\\\\\\\DELL\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\C--Users-DELL-Desktop-portfolio\\\\\\\\98c5e3df-4878-492a-94ab-9b54d26ddce3\\\\\\\\tasks\\\\\\\\bf39dp95d.output\")",
+      "PowerShell(Get-Process *)",
+      "Bash(git ls-remote *)"
+    ]
+  }
+}
