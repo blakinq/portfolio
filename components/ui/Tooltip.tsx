@@ -20,15 +20,22 @@ export function Tooltip({
   className?: string
 }) {
   const [open, setOpen] = useState(false)
+  const [canHover, setCanHover] = useState(true)
   const timerRef = useRef<number | null>(null)
 
   useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)")
+    const update = () => setCanHover(mq.matches)
+    update()
+    mq.addEventListener("change", update)
     return () => {
+      mq.removeEventListener("change", update)
       if (timerRef.current) window.clearTimeout(timerRef.current)
     }
   }, [])
 
   const show = () => {
+    if (!canHover) return
     if (timerRef.current) window.clearTimeout(timerRef.current)
     timerRef.current = window.setTimeout(() => setOpen(true), delay)
   }
