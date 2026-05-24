@@ -22,6 +22,8 @@ export const site = {
     linkedinUrl: "https://www.linkedin.com/in/tobiadekunle",
     instagram: "'Tobiloba",
     instagramUrl: "https://instagram.com/theblakinq",
+    dribbble: "blakinq",
+    dribbbleUrl: "https://dribbble.com/blakinq",
   },
   cameraTag: "Shot with Leica M6",
 }

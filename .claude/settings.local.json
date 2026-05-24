@@ -35,7 +35,10 @@
       "Bash(grep -q \"Ready in\\\\|compiled\\\\|error\" \"C:\\\\\\\\Users\\\\\\\\DELL\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\C--Users-DELL-Desktop-portfolio\\\\\\\\98c5e3df-4878-492a-94ab-9b54d26ddce3\\\\\\\\tasks\\\\\\\\bf39dp95d.output\")",
       "Bash(tail -20 \"C:\\\\\\\\Users\\\\\\\\DELL\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\C--Users-DELL-Desktop-portfolio\\\\\\\\98c5e3df-4878-492a-94ab-9b54d26ddce3\\\\\\\\tasks\\\\\\\\bf39dp95d.output\")",
       "PowerShell(Get-Process *)",
-      "Bash(git ls-remote *)"
+      "Bash(git ls-remote *)",
+      "Bash(git push *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
