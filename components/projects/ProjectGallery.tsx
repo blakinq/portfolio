@@ -1,12 +1,14 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight, Play, ZoomOut } from "lucide-react"
 import type { GalleryItem } from "@/types/project"
 
 const PLACEHOLDER_BG =
   "radial-gradient(120% 120% at 30% 30%, #2a2a2a 0%, #111 60%), linear-gradient(135deg, rgba(255,255,255,0.04), transparent)"
+
+const SLOW_LOAD_MS = 180
 
 function isVideoSrc(src?: string): boolean {
   if (!src) return false
@@ -79,51 +81,16 @@ export function ProjectGallery({ items }: { items: GalleryItem[] }) {
               key={i}
               className={`flex flex-col gap-2 ${isTall ? "sm:row-span-2" : ""}`}
             >
-              <button
-                type="button"
-                onClick={() => setActiveIndex(i)}
-                aria-label={item.alt ?? `Open item ${i + 1}`}
-                className={`group relative block w-full cursor-zoom-in overflow-hidden rounded-[4px] border border-border-subtle outline-none transition-colors hover:border-border-default focus-visible:border-border-strong ${thumbAspectClass(item)} ${mobileBorderJoin}`}
-              >
-                {item.src && !failed.has(i) ? (
-                  isVideo ? (
-                    <video
-                      src={item.src}
-                      muted
-                      playsInline
-                      preload="metadata"
-                      onError={() => markFailed(i)}
-                      className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                    />
-                  ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={item.src}
-                      alt={item.alt ?? ""}
-                      onError={() => markFailed(i)}
-                      className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                    />
-                  )
-                ) : (
-                  <div
-                    className="size-full transition-transform duration-500 group-hover:scale-[1.02]"
-                    style={{ background: PLACEHOLDER_BG }}
-                  />
-                )}
-                {isVideo && !failed.has(i) && (
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 flex items-center justify-center"
-                  >
-                    <span className="inline-flex size-12 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm transition-transform group-hover:scale-110">
-                      <Play className="size-5 translate-x-[1px]" strokeWidth={1.75} fill="currentColor" />
-                    </span>
-                  </span>
-                )}
-                <span className="pointer-events-none absolute right-2 top-2 font-mono text-[10px] uppercase tracking-[0.16em] text-text-tertiary">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </button>
+              <GalleryThumb
+                item={item}
+                index={i}
+                isVideo={isVideo}
+                failed={failed.has(i)}
+                onFail={() => markFailed(i)}
+                onOpen={() => setActiveIndex(i)}
+                aspectClass={thumbAspectClass(item)}
+                mobileBorderJoin={mobileBorderJoin}
+              />
               {item.caption && (
                 <figcaption className="text-xs text-text-tertiary">
                   {item.caption}
@@ -252,5 +219,100 @@ export function ProjectGallery({ items }: { items: GalleryItem[] }) {
         )}
       </AnimatePresence>
     </>
+  )
+}
+
+type GalleryThumbProps = {
+  item: GalleryItem
+  index: number
+  isVideo: boolean
+  failed: boolean
+  onFail: () => void
+  onOpen: () => void
+  aspectClass: string
+  mobileBorderJoin: string
+}
+
+function GalleryThumb({
+  item,
+  index,
+  isVideo,
+  failed,
+  onFail,
+  onOpen,
+  aspectClass,
+  mobileBorderJoin,
+}: GalleryThumbProps) {
+  const [loaded, setLoaded] = useState(false)
+  const [slow, setSlow] = useState(false)
+  const imgRef = useRef<HTMLImageElement | null>(null)
+
+  useEffect(() => {
+    if (!item.src || failed || loaded) return
+    // If the cached image already completed before React attached the handler,
+    // mark it loaded synchronously and skip the slow-load timer.
+    if (imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
+      setLoaded(true)
+      return
+    }
+    const t = window.setTimeout(() => setSlow(true), SLOW_LOAD_MS)
+    return () => window.clearTimeout(t)
+  }, [item.src, failed, loaded])
+
+  const showPlaceholder = !item.src || failed || (!loaded && slow)
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={item.alt ?? `Open item ${index + 1}`}
+      className={`group relative block w-full cursor-zoom-in overflow-hidden rounded-[4px] border border-border-subtle outline-none transition-colors hover:border-border-default focus-visible:border-border-strong ${aspectClass} ${mobileBorderJoin}`}
+      style={showPlaceholder ? { background: PLACEHOLDER_BG } : undefined}
+    >
+      {showPlaceholder && (
+        <span
+          aria-hidden
+          className="gallery-skeleton pointer-events-none absolute inset-0"
+        />
+      )}
+      {item.src && !failed ? (
+        isVideo ? (
+          <video
+            src={item.src}
+            muted
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setLoaded(true)}
+            onError={onFail}
+            className="relative size-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            ref={imgRef}
+            src={item.src}
+            alt={item.alt ?? ""}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setLoaded(true)}
+            onError={onFail}
+            className="relative size-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        )
+      ) : null}
+      {isVideo && !failed && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        >
+          <span className="inline-flex size-12 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm transition-transform group-hover:scale-110">
+            <Play className="size-5 translate-x-[1px]" strokeWidth={1.75} fill="currentColor" />
+          </span>
+        </span>
+      )}
+      <span className="pointer-events-none absolute right-2 top-2 font-mono text-[10px] uppercase tracking-[0.16em] text-text-tertiary">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+    </button>
   )
 }

@@ -292,7 +292,7 @@ export default async function ProjectPage({ params }: PageProps) {
         </article>
 
         {(prev || next) && (
-          <nav className="mt-16 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <nav className="mt-16 grid grid-cols-2 gap-3">
             {prev ? (
               <Link
                 href={`/work/${prev.slug}`}
@@ -307,7 +307,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 </span>
               </Link>
             ) : (
-              <span aria-hidden className="hidden sm:block" />
+              <span aria-hidden />
             )}
             {next ? (
               <Link

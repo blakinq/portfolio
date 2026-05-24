@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils"
 import type { ProjectDiscipline } from "@/types/project"
 
 const TABS: Array<{ id: ProjectDiscipline; label: string }> = [
-  { id: "design", label: "Design" },
   { id: "engineering", label: "Engineering" },
+  { id: "design", label: "Design" },
 ]
 
 function isDiscipline(v: string | null): v is ProjectDiscipline {
@@ -21,7 +21,7 @@ export function ProjectGrid() {
   const searchParams = useSearchParams()
   const initial = searchParams.get("tab")
   const [tab, setTab] = useState<ProjectDiscipline>(
-    isDiscipline(initial) ? initial : "design",
+    isDiscipline(initial) ? initial : "engineering",
   )
 
   const visible = useMemo(

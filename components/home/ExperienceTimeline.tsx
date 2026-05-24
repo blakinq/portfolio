@@ -8,7 +8,7 @@ import { experience } from "@/content/experience"
 import { cn } from "@/lib/utils"
 
 export function ExperienceTimeline() {
-  const [openId, setOpenId] = useState<string | null>(experience[0]?.id ?? null)
+  const [openId, setOpenId] = useState<string | null>(null)
 
   return (
     <section className="py-10">
