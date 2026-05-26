@@ -8,6 +8,7 @@ import { kindred } from "./kindred"
 import { tokene } from "./tokene"
 import { joseWhitney } from "./jose-whitney"
 import { cuk } from "./cuk"
+import { metrix } from "./metrix"
 
 export const projects: Project[] = [
   agegeLga,
@@ -19,6 +20,7 @@ export const projects: Project[] = [
   tokene,
   joseWhitney,
   cuk,
+  metrix,
 ].sort((a, b) => a.order - b.order)
 
 export function getProjectsByDiscipline(discipline: ProjectDiscipline): Project[] {
