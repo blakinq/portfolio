@@ -15,5 +15,5 @@ export const tokene: Project = {
   solutions: [],
   tags: [],
   featured: false,
-  order: 7,
+  order: 8,
 }

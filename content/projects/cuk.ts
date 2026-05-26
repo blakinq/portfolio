@@ -15,5 +15,5 @@ export const cuk: Project = {
   solutions: [],
   tags: [],
   featured: false,
-  order: 9,
+  order: 10,
 }

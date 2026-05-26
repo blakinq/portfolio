@@ -15,5 +15,5 @@ export const joseWhitney: Project = {
   solutions: [],
   tags: [],
   featured: false,
-  order: 8,
+  order: 9,
 }

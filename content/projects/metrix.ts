@@ -15,5 +15,5 @@ export const metrix: Project = {
   solutions: [],
   tags: [],
   featured: false,
-  order: 10,
+  order: 7,
 }
