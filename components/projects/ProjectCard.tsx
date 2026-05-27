@@ -5,8 +5,11 @@ import type { Project } from "@/types/project"
 const FALLBACK_BG =
   "radial-gradient(120% 120% at 30% 30%, #2a2a2a 0%, #111 60%), linear-gradient(135deg, rgba(255,255,255,0.04), transparent)"
 
+const SCREENSHOT_REV = "2"
+
 function screenshotUrl(pageUrl: string): string {
-  const url = encodeURIComponent(pageUrl)
+  const withRev = pageUrl + (pageUrl.includes("?") ? "&" : "?") + `v=${SCREENSHOT_REV}`
+  const url = encodeURIComponent(withRev)
   return `https://api.microlink.io/?url=${url}&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1280&viewport.height=800`
 }
 
